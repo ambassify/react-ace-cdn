@@ -1,10 +1,6 @@
-# React-Ace
+# React-Ace-CDN
 
-[![npm version](https://badge.fury.io/js/react-ace.svg)](http://badge.fury.io/js/react-ace)
-
-[![Build Status](https://travis-ci.org/securingsincity/react-ace.svg)](https://travis-ci.org/securingsincity/react-ace)
-
-A react component for Ace / Brace
+A react component for Ace
 
 ## Install
 

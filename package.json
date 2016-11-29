@@ -1,6 +1,6 @@
 {
-  "name": "react-ace",
-  "version": "4.1.0",
+  "name": "react-ace-cdn",
+  "version": "1.0.0",
   "description": "A react component for Ace Editor",
   "main": "lib/ace.js",
   "scripts": {
@@ -28,7 +28,7 @@
       "transform-object-rest-spread"
     ]
   },
-  "author": "James Hrisho",
+  "author": "Ambassify",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.6.5",
@@ -55,8 +55,7 @@
     "ace",
     "ace editor",
     "react-component",
-    "react",
-    "brace"
+    "react"
   ],
   "dependencies": {
     "brace": "^0.8.0",
