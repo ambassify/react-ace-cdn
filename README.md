@@ -1,21 +1,17 @@
-# React-Ace-CDN
+# react-ace-cdn
 
-A react component for Ace
+A react component for Ace that loads the Ace files from `https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/` on demand.
 
 ## Install
 
-`npm install react-ace`
+`npm install react-ace-cdn`
 
 ## Usage
 
 ```javascript
 import React from 'react';
 import { render } from 'react-dom';
-import brace from 'brace';
-import AceEditor from 'react-ace';
-
-import 'brace/mode/java';
-import 'brace/theme/github';
+import AceEditor from 'react-ace-cdn';
 
 function onChange(newValue) {
   console.log('change',newValue);
@@ -41,7 +37,7 @@ Looking for a way to set it up using webpack? Checkout `example` directory for a
 
 |Prop|Default|Description|
 |-----|------|----------|
-|name| 'brace-editor'| Unique Id to be used for the editor|
+|name| 'ace-editor'| Unique Id to be used for the editor|
 |mode| ''| Language for parsing and code highlighting|
 |theme| ''| theme to use|
 |height| '500px'| CSS value for height|
@@ -80,7 +76,7 @@ Looking for a way to set it up using webpack? Checkout `example` directory for a
 
 ## Modes, Themes, and Keyboard Handlers
 
-All modes, themes, and keyboard handlers should be required through ```brace``` directly.  Browserify will grab these modes / themes / keyboard handlers through ```brace``` and will be available at run time.  See the example above.  This prevents bloating the compiled javascript with extra modes and themes for your application.
+All modes, themes, and keyboard handlers will be requested from CDN on-demand.  This prevents bloating the compiled javascript with extra modes and themes for your application.
 
 ### Example Modes
 
