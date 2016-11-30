@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import isEqual from 'lodash/isEqual';
+import isEqual from 'lodash.isequal';
 import injectAce from './injectAce';
 
 const editorOptions = [
