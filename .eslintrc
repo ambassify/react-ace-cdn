@@ -8,7 +8,8 @@
     "parserOptions": {
         "sourceType": "module",
         "ecmaFeatures": {
-            "experimentalObjectRestSpread": true
+            "experimentalObjectRestSpread": true,
+            "jsx": true
         }
     },
     "plugins": [
