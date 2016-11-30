@@ -1,8 +1,6 @@
-import ace from 'brace';
 import React, { PropTypes } from 'react';
-import isEqual from 'lodash.isequal';
-
-const { Range } = ace.acequire('ace/range');
+import isEqual from 'lodash/isEqual';
+import injectAce from './injectAce';
 
 const editorOptions = [
     'minLines',
@@ -15,7 +13,8 @@ const editorOptions = [
     'enableSnippets'
 ];
 
-export default class ReactAce extends React.PureComponent {
+export class ReactAce extends React.PureComponent {
+
     constructor(props) {
         super(props);
         [
@@ -34,6 +33,7 @@ export default class ReactAce extends React.PureComponent {
 
     componentDidMount() {
         const {
+            ace,
             className,
             onBeforeLoad,
             mode,
@@ -124,11 +124,11 @@ export default class ReactAce extends React.PureComponent {
         }
 
         if (nextProps.className !== oldProps.className) {
-            let appliedClasses = this.refs.editor.className;
-            let appliedClassesArray = appliedClasses.trim().split(' ');
-            let oldClassesArray = oldProps.className.trim().split(' ');
+            const appliedClasses = this.refs.editor.className;
+            const appliedClassesArray = appliedClasses.trim().split(' ');
+            const oldClassesArray = oldProps.className.trim().split(' ');
             oldClassesArray.forEach((oldClass) => {
-                let index = appliedClassesArray.indexOf(oldClass);
+                const index = appliedClassesArray.indexOf(oldClass);
                 appliedClassesArray.splice(index, 1);
             });
             this.refs.editor.className = ' ' + nextProps.className + ' ' + appliedClassesArray.join(' ');
@@ -235,6 +235,8 @@ export default class ReactAce extends React.PureComponent {
     }
 
     handleMarkers(markers) {
+        const { Range } = this.props.ace.require('ace/range');
+
         // remove foreground markers
         let currentMarkers = this.editor.getSession().getMarkers(true);
         for (const i in currentMarkers) {
@@ -260,16 +262,13 @@ export default class ReactAce extends React.PureComponent {
         const { name, width, height, style } = this.props;
         const divStyle = { width, height, ...style };
         return (
-            <div ref="editor"
-                id={name}
-                style={divStyle}
-                >
-            </div>
+            <div ref="editor" id={name} style={divStyle}></div>
         );
     }
 }
 
 ReactAce.propTypes = {
+    ace: PropTypes.object,
     mode: PropTypes.string,
     focus: PropTypes.bool,
     theme: PropTypes.string,
@@ -317,7 +316,7 @@ ReactAce.propTypes = {
 };
 
 ReactAce.defaultProps = {
-    name: 'brace-editor',
+    name: 'ace-editor',
     focus: false,
     mode: '',
     theme: '',
@@ -343,3 +342,5 @@ ReactAce.defaultProps = {
     enableBasicAutocompletion: false,
     enableLiveAutocompletion: false
 };
+
+export default injectAce(ReactAce);

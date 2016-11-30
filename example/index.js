@@ -1,16 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
 import AceEditor from 'react-ace';
-import brace from 'brace';
-
-import 'brace/mode/java';
-import 'brace/mode/javascript';
-
-import 'brace/theme/github';
-import 'brace/theme/monokai';
-import 'brace/theme/solarized_light';
-import 'brace/ext/language_tools';
-
 
 function onLoad(editor) {
     console.log('i\'ve loaded');

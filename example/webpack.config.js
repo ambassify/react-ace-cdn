@@ -14,7 +14,7 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'react-ace':  path.join(__dirname, '..', 'src', 'ace.jsx')
+            'react-ace':  path.join(__dirname, '..', 'src', 'ace.js')
         }
     },
     plugins: [

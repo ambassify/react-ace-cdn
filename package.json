@@ -5,10 +5,10 @@
   "main": "lib/ace.js",
   "scripts": {
     "clean": "rimraf lib dist",
-    "lint": "eslint src/ace.jsx",
+    "lint": "eslint src/ace.js",
     "build:lib": "babel src --out-dir lib",
-    "build:umd": "webpack src/ace.jsx dist/react-ace.js --config webpack.config.development.js",
-    "build:umd:min": "webpack src/ace.jsx dist/react-ace.min.js --config webpack.config.production.js",
+    "build:umd": "webpack src/ace.js dist/react-ace.js --config webpack.config.development.js",
+    "build:umd:min": "webpack src/ace.js dist/react-ace.min.js --config webpack.config.production.js",
     "build:example": "cd example && npm install",
     "build": "npm run build:lib && npm run build:umd && npm run build:umd:min",
     "check": "npm run lint",
@@ -57,7 +57,6 @@
     "react"
   ],
   "dependencies": {
-    "brace": "^0.8.0",
     "lodash.isequal": "^4.1.1"
   },
   "peerDependencies": {

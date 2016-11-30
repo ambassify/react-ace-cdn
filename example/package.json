@@ -12,7 +12,6 @@
   "license": "MIT",
   "homepage": "http://rackt.github.io/redux",
   "dependencies": {
-    "brace": "^0.8.0",
     "react": "^15.0.1",
     "react-dom": "^15.0.1"
   },
