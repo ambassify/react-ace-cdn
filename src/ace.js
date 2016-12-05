@@ -13,7 +13,7 @@ const editorOptions = [
     'enableSnippets'
 ];
 
-export class ReactAce extends React.PureComponent {
+export class ReactAce extends React.Component {
 
     constructor(props) {
         super(props);
