@@ -1,6 +1,6 @@
 {
   "name": "react-ace-cdn",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A react component for Ace Editor",
   "main": "lib/ace.js",
   "scripts": {
