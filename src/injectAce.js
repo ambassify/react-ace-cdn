@@ -18,6 +18,6 @@ export default (Component) => class InjectAce extends React.Component {
         if (!hasAce())
             return null;
 
-        return React.createElement(Component, { ace: window.ace, ...this.props});
+        return React.createElement(Component, { ace: window.ace, ...this.props });
     }
-}
+};

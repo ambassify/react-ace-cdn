@@ -1,0 +1,8 @@
+{
+    "recursive": true,
+    "exit": true,
+    "require": [
+        "@babel/register",
+        "test/setup"
+    ]
+}

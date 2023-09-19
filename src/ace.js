@@ -19,6 +19,7 @@ export class ReactAce extends React.Component {
     constructor(props) {
         super(props);
         [
+            'onEditor',
             'onChange',
             'onFocus',
             'onBlur',
@@ -27,9 +28,9 @@ export class ReactAce extends React.Component {
             'onScroll',
             'handleOptions'
         ]
-        .forEach(method => {
-            this[method] = this[method].bind(this);
-        });
+            .forEach(method => {
+                this[method] = this[method].bind(this);
+            });
     }
 
     componentDidMount() {
@@ -54,19 +55,22 @@ export class ReactAce extends React.Component {
             markers
         } = this.props;
 
-        this.editor = ace.edit(this.refs.editor);
+        this.editor = ace.edit(this.editorRef);
 
-        if (onBeforeLoad) {
+        if (onBeforeLoad)
             onBeforeLoad(ace);
-        }
+
 
         const editorProps = Object.keys(this.props.editorProps);
-        for (let i = 0; i < editorProps.length; i++) {
+        for (let i = 0; i < editorProps.length; i++)
             this.editor[editorProps[i]] = this.props.editorProps[editorProps[i]];
-        }
 
-        this.editor.getSession().setMode(`ace/mode/${mode}`);
-        this.editor.setTheme(`ace/theme/${theme}`);
+        if (mode)
+            this.editor.getSession().setMode(`ace/mode/${mode}`);
+
+        if (theme)
+            this.editor.setTheme(`ace/theme/${theme}`);
+
         this.editor.setFontSize(fontSize);
         this.editor.setValue(defaultValue === undefined ? value : defaultValue, cursorStart);
         this.editor.renderer.setShowGutter(showGutter);
@@ -86,9 +90,9 @@ export class ReactAce extends React.Component {
         const availableOptions = this.editor.$options;
         for (let i = 0; i < editorOptions.length; i++) {
             const option = editorOptions[i];
-            if (availableOptions.hasOwnProperty(option)) {
+            if (Object.hasOwnProperty.call(availableOptions, option))
                 this.editor.setOption(option, this.props[option]);
-            }
+
         }
 
         if (Array.isArray(commands)) {
@@ -97,21 +101,21 @@ export class ReactAce extends React.Component {
             });
         }
 
-        if (keyboardHandler) {
+        if (keyboardHandler)
             this.editor.setKeyboardHandler('ace/keyboard/' + keyboardHandler);
-        }
 
-        if (className) {
-            this.refs.editor.className += ' ' + className;
-        }
 
-        if (focus) {
+        if (className)
+            this.editorRef.className += ' ' + className;
+
+
+        if (focus)
             this.editor.focus();
-        }
 
-        if (onLoad) {
+
+        if (onLoad)
             onLoad(this.editor);
-        }
+
     }
 
     componentDidUpdate(oldProps) {
@@ -119,56 +123,56 @@ export class ReactAce extends React.Component {
 
         for (let i = 0; i < editorOptions.length; i++) {
             const option = editorOptions[i];
-            if (nextProps[option] !== oldProps[option]) {
+            if (nextProps[option] !== oldProps[option])
                 this.editor.setOption(option, nextProps[option]);
-            }
+
         }
 
         if (nextProps.className !== oldProps.className) {
-            const appliedClasses = this.refs.editor.className;
+            const appliedClasses = this.editorRef.className;
             const appliedClassesArray = appliedClasses.trim().split(' ');
             const oldClassesArray = oldProps.className.trim().split(' ');
             oldClassesArray.forEach((oldClass) => {
                 const index = appliedClassesArray.indexOf(oldClass);
                 appliedClassesArray.splice(index, 1);
             });
-            this.refs.editor.className = ' ' + nextProps.className + ' ' + appliedClassesArray.join(' ');
+            this.editorRef.className = ' ' + nextProps.className + ' ' + appliedClassesArray.join(' ');
         }
 
-        if (nextProps.mode !== oldProps.mode) {
+        if (nextProps.mode !== oldProps.mode)
             this.editor.getSession().setMode('ace/mode/' + nextProps.mode);
-        }
-        if (nextProps.theme !== oldProps.theme) {
+
+        if (nextProps.theme !== oldProps.theme)
             this.editor.setTheme('ace/theme/' + nextProps.theme);
-        }
+
         if (nextProps.keyboardHandler !== oldProps.keyboardHandler) {
-            if (nextProps.keyboardHandler) {
+            if (nextProps.keyboardHandler)
                 this.editor.setKeyboardHandler('ace/keyboard/' + nextProps.keyboardHandler);
-            } else {
+            else
                 this.editor.setKeyboardHandler(null);
-            }
+
         }
-        if (nextProps.fontSize !== oldProps.fontSize) {
+        if (nextProps.fontSize !== oldProps.fontSize)
             this.editor.setFontSize(nextProps.fontSize);
-        }
-        if (nextProps.wrapEnabled !== oldProps.wrapEnabled) {
+
+        if (nextProps.wrapEnabled !== oldProps.wrapEnabled)
             this.editor.getSession().setUseWrapMode(nextProps.wrapEnabled);
-        }
-        if (nextProps.showPrintMargin !== oldProps.showPrintMargin) {
+
+        if (nextProps.showPrintMargin !== oldProps.showPrintMargin)
             this.editor.setShowPrintMargin(nextProps.showPrintMargin);
-        }
-        if (nextProps.showGutter !== oldProps.showGutter) {
+
+        if (nextProps.showGutter !== oldProps.showGutter)
             this.editor.renderer.setShowGutter(nextProps.showGutter);
-        }
-        if (!isEqual(nextProps.setOptions, oldProps.setOptions)) {
+
+        if (!isEqual(nextProps.setOptions, oldProps.setOptions))
             this.handleOptions(nextProps);
-        }
-        if (!isEqual(nextProps.annotations, oldProps.annotations)) {
+
+        if (!isEqual(nextProps.annotations, oldProps.annotations))
             this.editor.getSession().setAnnotations(nextProps.annotations || []);
-        }
-        if (!isEqual(nextProps.markers, oldProps.markers)) {
+
+        if (!isEqual(nextProps.markers, oldProps.markers))
             this.handleMarkers(nextProps.markers || []);
-        }
+
         if (this.editor && this.editor.getValue() !== nextProps.value) {
             // editor.setValue is a synchronous function call, change event is emitted before setValue return.
             this.silent = true;
@@ -178,17 +182,53 @@ export class ReactAce extends React.Component {
             this.silent = false;
         }
 
-        if (nextProps.focus && !oldProps.focus) {
+        if (nextProps.focus && !oldProps.focus)
             this.editor.focus();
-        }
-        if(nextProps.height !== this.props.height){
+
+        if (nextProps.height !== this.props.height)
             this.editor.resize();
-        }
+
     }
 
     componentWillUnmount() {
         this.editor.destroy();
         this.editor = null;
+    }
+
+
+    handleOptions(props) {
+        const setOptions = Object.keys(props.setOptions);
+        for (let y = 0; y < setOptions.length; y++)
+            this.editor.setOption(setOptions[y], props.setOptions[setOptions[y]]);
+
+    }
+
+    handleMarkers(markers) {
+        const { Range } = this.props.ace.require('ace/range');
+
+        // remove foreground markers
+        let currentMarkers = this.editor.getSession().getMarkers(true);
+        for (const i in currentMarkers) {
+            if (Object.hasOwnProperty.call(currentMarkers, i))
+                this.editor.getSession().removeMarker(currentMarkers[i].id);
+
+        }
+        // remove background markers
+        currentMarkers = this.editor.getSession().getMarkers(false);
+        for (const i in currentMarkers) {
+            if (Object.hasOwnProperty.call(currentMarkers, i))
+                this.editor.getSession().removeMarker(currentMarkers[i].id);
+
+        }
+        // add new markers
+        markers.forEach(({ startRow, startCol, endRow, endCol, className, type, inFront = false }) => {
+            const range = new Range(startRow, startCol, endRow, endCol);
+            this.editor.getSession().addMarker(range, className, type, inFront);
+        });
+    }
+
+    onEditor(ref) {
+        this.editorRef = ref;
     }
 
     onChange() {
@@ -199,71 +239,40 @@ export class ReactAce extends React.Component {
     }
 
     onFocus() {
-        if (this.props.onFocus) {
+        if (this.props.onFocus)
             this.props.onFocus();
-        }
+
     }
 
     onBlur() {
-        if (this.props.onBlur) {
+        if (this.props.onBlur)
             this.props.onBlur();
-        }
+
     }
 
     onCopy(text) {
-        if (this.props.onCopy) {
+        if (this.props.onCopy)
             this.props.onCopy(text);
-        }
+
     }
 
     onPaste(text) {
-        if (this.props.onPaste) {
+        if (this.props.onPaste)
             this.props.onPaste(text);
-        }
+
     }
 
     onScroll() {
-        if (this.props.onScroll) {
+        if (this.props.onScroll)
             this.props.onScroll(this.editor);
-        }
-    }
 
-    handleOptions(props) {
-        const setOptions = Object.keys(props.setOptions);
-        for (let y = 0; y < setOptions.length; y++) {
-            this.editor.setOption(setOptions[y], props.setOptions[setOptions[y]]);
-        }
-    }
-
-    handleMarkers(markers) {
-        const { Range } = this.props.ace.require('ace/range');
-
-        // remove foreground markers
-        let currentMarkers = this.editor.getSession().getMarkers(true);
-        for (const i in currentMarkers) {
-            if (currentMarkers.hasOwnProperty(i)) {
-                this.editor.getSession().removeMarker(currentMarkers[i].id);
-            }
-        }
-        // remove background markers
-        currentMarkers = this.editor.getSession().getMarkers(false);
-        for (const i in currentMarkers) {
-            if (currentMarkers.hasOwnProperty(i)) {
-                this.editor.getSession().removeMarker(currentMarkers[i].id);
-            }
-        }
-        // add new markers
-        markers.forEach(({ startRow, startCol, endRow, endCol, className, type, inFront = false }) => {
-            const range = new Range(startRow, startCol, endRow, endCol);
-            this.editor.getSession().addMarker(range, className, type, inFront);
-        });
     }
 
     render() {
         const { name, width, height, style } = this.props;
         const divStyle = { width, height, ...style };
         return (
-            <div ref="editor" id={name} style={divStyle}></div>
+            <div ref={this.onEditor} id={name} style={divStyle} />
         );
     }
 }
@@ -275,6 +284,7 @@ ReactAce.propTypes = {
     theme: PropTypes.string,
     name: PropTypes.string,
     className: PropTypes.string,
+    style: PropTypes.object,
     height: PropTypes.string,
     width: PropTypes.string,
     fontSize: PropTypes.oneOfType([

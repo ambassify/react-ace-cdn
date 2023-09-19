@@ -1,11 +1,13 @@
 'use strict';
 
-var webpack = require('webpack');
-
 module.exports = {
     module: {
-        loaders: [
-            { test: /\.jsx?$/, loaders: ['babel-loader'], exclude: /node_modules/ }
+        rules: [
+            {
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                use: [ 'babel-loader' ],
+            }
         ]
     },
     output: {
@@ -21,6 +23,6 @@ module.exports = {
         }
     },
     resolve: {
-        extensions: ['', '.js']
+        extensions: [ '', '.js' ]
     }
 };

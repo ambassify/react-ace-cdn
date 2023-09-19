@@ -26,7 +26,7 @@ export default function load(cb) {
     script.src = _url;
     script.async = true;
 
-    script.onload = script.onreadystatechange = function () {
+    script.onload = script.onreadystatechange = function() {
         const ready = !this.readyState || this.readyState == 'complete';
         if (!result && ready) {
             result = true;
