@@ -74,5 +74,8 @@
   "repository": {
     "type": "git",
     "url": "http://github.com/ambassify/react-ace-cdn.git"
+  },
+  "overrides": {
+    "serialize-javascript": "^7.1.3"
   }
 }
